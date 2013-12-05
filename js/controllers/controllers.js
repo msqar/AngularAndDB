@@ -10,9 +10,14 @@ productApp.config(function($routeProvider) {
 });
 
 productApp.controller('productController', function($scope, $http) {
-	$http.get('php/connect.php').success(function(data) {
+	$http.get('php/connect.php').
+	success(function(data, status) {
 		$scope.products = data;
-		console.log($scope.products);
+		console.log($scope.products + ' with status ' + status);
+	}).
+	error(function(data, status, headers, config) {		
+		$scope.error = true;
+		$scope.msg = 'Failed to retrieve data from the database';
 	});
 })
 
